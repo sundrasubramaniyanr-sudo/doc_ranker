@@ -1,15 +1,24 @@
 import unittest
 
 from doc_ranker import rank_datasets
-
+from pathlib import Path
 
 class RankDatasetsTests(unittest.TestCase):
     def test_ranks_most_relevant_dataset_first(self):
-        datasets = [
-            "banana smoothie with milk",
-            "python code ranking with tf idf",
-            "chocolate cake recipe",
-        ]
+        # 1. Define path to your dataset folder relative to this file
+        data_dir = Path("IR_datasets")
+
+        # 2. Read each .txt file into the datasets list
+        datasets = []
+        for file_path in data_dir.glob("*.txt"):
+            datasets.append(file_path.read_text(encoding="utf-8").strip())
+
+        # 3. Proceed with query and test logic
+        query = "python tfidf"
+        
+        # Example call to your ranking function:
+        # results = rank_datasets(query, datasets)
+        # self.assertEqual(results[0], "expected top document text")
 
         results = rank_datasets("tf idf ranking code", datasets)
 
