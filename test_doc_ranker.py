@@ -6,7 +6,7 @@ from pathlib import Path
 class RankDatasetsTests(unittest.TestCase):
     def test_ranks_most_relevant_dataset_first(self):
         # 1. Define path to your dataset folder relative to this file
-        data_dir = Path("IR_datasets")
+        data_dir = Path("IR_30datasets")
 
         # 2. Read each .txt file into the datasets list
         datasets = []
