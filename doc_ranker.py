@@ -58,7 +58,13 @@ def rank_datasets(query: str, datasets: list[str], top_k: int | None = None) -> 
             dot_product / (query_norm * document_norm)
             if query_norm and document_norm else 0.0
         )
-        results.append({"document": original_document, "score": score})
+        results.append(
+            {
+                "dataset": original_document,
+                "document": original_document,
+                "score": score,
+            }
+        )
 
     results.sort(key=lambda item: item["score"], reverse=True)
     return results[:top_k] if top_k else results
@@ -70,7 +76,8 @@ def rank_dataset_directory(directory: str | Path, query: str, top_k: int | None 
 
     ranked = rank_datasets(query, documents, top_k)
     for result in ranked:
-        index = documents.index(result["document"])
+        dataset_value = result.get("dataset", result.get("document"))
+        index = documents.index(dataset_value)
         result["filename"] = paths[index].name
 
     return ranked
