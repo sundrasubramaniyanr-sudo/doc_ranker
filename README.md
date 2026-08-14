@@ -4,13 +4,15 @@ by using the TF-IDF algorithm the documents are ranked.
 ## Usage
 
 ```python
-from doc_ranker import rank_datasets
+ def tfidf(tokens: list[str]) -> dict[str, float]:
+        counts = Counter(tokens)
+        length = len(tokens)
+        if length == 0:
+            return {}
 
-datasets = [
-    "python code ranking with tf idf",
-    "chocolate cake recipe",
-]
-
-results = rank_datasets("tf idf ranking", datasets)
-print(results)
+        return {
+            term: (count / length)
+            * (math.log((total_documents + 1) / (document_frequency[term] + 1)) + 1)
+            for term, count in counts.items()
+        }
 ```
