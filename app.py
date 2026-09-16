@@ -24,7 +24,7 @@ st.sidebar.caption('Donation & Basic-Needs Management System')
 page=st.sidebar.radio('Navigation',['Dashboard','Current Needs','Donors','Add Donation','Donation History','Reports'])
 
 if page=='Dashboard':
-    st.title('❤️ SANTHAM Home for Aged'); st.subheader('Donation & Basic-Needs Management System')
+    st.title(' SANTHAM Home for Aged'); st.subheader('Donation & Basic-Needs Management System')
     st.write('A simple digital system for organizing basic requirements and donation records.')
     n,d,do=q('SELECT * FROM needs'),q('SELECT * FROM donors'),q('SELECT * FROM donations')
     a,b,c,x=st.columns(4); a.metric('Elderly Residents','≈ 10'); b.metric('Open Requirements',int((n.status!='Completed').sum()) if not n.empty else 0); c.metric('Registered Donors',len(d)); x.metric('Donations Recorded',len(do))
@@ -32,7 +32,7 @@ if page=='Dashboard':
     st.dataframe(n[['item','quantity','unit','status','date_added']] if not n.empty else pd.DataFrame(),use_container_width=True,hide_index=True)
 
 elif page=='Current Needs':
-    st.title('📦 Current Needs')
+    st.title(' Current Needs')
     with st.form('need',clear_on_submit=True):
         a,b,c=st.columns(3); item=a.text_input('Item'); qty=b.number_input('Quantity',min_value=.1,step=1.); unit=c.text_input('Unit')
         if st.form_submit_button('Add Requirement'):
@@ -53,7 +53,7 @@ elif page=='Donors':
     st.dataframe(q('SELECT * FROM donors ORDER BY id DESC'),use_container_width=True,hide_index=True)
 
 elif page=='Add Donation':
-    st.title('💰 Add Donation'); d=q('SELECT name FROM donors ORDER BY name'); opts=d.name.tolist() if not d.empty else ['Walk-in / Other']
+    st.title('Add Donation'); d=q('SELECT name FROM donors ORDER BY name'); opts=d.name.tolist() if not d.empty else ['Walk-in / Other']
     with st.form('donation',clear_on_submit=True):
         donor=st.selectbox('Donor',opts); item=st.text_input('Donated Item'); qty=st.number_input('Quantity',min_value=0.,step=1.); unit=st.text_input('Unit'); amount=st.number_input('Monetary Contribution (₹)',min_value=0.,step=100.); dd=st.date_input('Donation Date',date.today())
         if st.form_submit_button('Record Donation'):
